@@ -8,27 +8,40 @@ class Solution
 public:
     string chooseandswap(string a)
     {
-        // Code Here
         int n = a.length();
-        char k = a[0];
-        char p = 'A';
-        for (char c : a)
+        map<char, int> mp;
+        for (char c = 'a'; c <= 'z'; c++)
+            mp[c] = -1;
+        for (int i = 0; i < n; i++)
         {
-            if (c < k)
-                p = min(p, c);
+            if (mp[a[i]] == -1)
+                mp[a[i]] = i;
         }
-        for (char c : a)
+        bool found = false;
+        char c1, c2;
+        for (int i = 0; i < n; i++)
         {
-            if (c == p)
+            for (char p = 'a'; p < a[i]; p++)
             {
-                c = k;
+                if (mp[p] > i)
+                {
+                    found = true;
+                    c2 = p;
+                    c1 = a[i];
+                    break;
+                }
             }
-            else if (c == k)
-            {
-                c = p;
-            }
+            if (found == true)
+                break;
         }
-        return s;
+        for (int i = 0; i < n; i++)
+        {
+            if (a[i] == c1)
+                a[i] = c2;
+            else if (a[i] == c2)
+                a[i] = c1;
+        }
+        return a;
     }
 };
 
